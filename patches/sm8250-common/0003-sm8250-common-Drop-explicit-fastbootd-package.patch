@@ -1,0 +1,30 @@
+From 7f4c367b2cd6e82950cd65ff8397226082f367c9 Mon Sep 17 00:00:00 2001
+From: rivena port <port@localhost>
+Date: Mon, 26 Oct 2026 08:23:30 +0800
+Subject: [PATCH 3/8] sm8250-common: Drop explicit fastbootd package
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+fastbootd 现在由 fastboot HAL 的依赖自动带出，再显式列一遍会重复。
+---
+ common.mk | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/common.mk b/common.mk
+index bb5ccc6..f5c1da8 100644
+--- a/common.mk
++++ b/common.mk
+@@ -131,8 +131,7 @@ PRODUCT_PACKAGES += \
+ 
+ # fastbootd
+ PRODUCT_PACKAGES += \
+-    android.hardware.fastboot@1.1-impl.custom \
+-    fastbootd
++    android.hardware.fastboot@1.1-impl.custom
+ 
+ # Fingerprint
+ PRODUCT_PACKAGES += \
+-- 
+2.43.0
+
