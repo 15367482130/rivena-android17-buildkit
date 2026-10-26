@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  realme GT 大师探索版 (RMX3366 / rivena) —— LineageOS 24.0 (Android 17) 完整依赖清单
+  用法：放进 <源码>/.repo/local_manifests/rivena-24.0.xml
+  注意：这份是"能起编"的版本，不是"能开机"的版本。缺口说明见 WHAT-ELSE.md。
+-->
+<manifest>
+    <!-- 你自己的仓库（已开源） -->
+    <remote name="mine_gh" fetch="https://github.com/15367482130" />
+    <remote name="rmx_gh" fetch="https://github.com/RMX3366-Development" />
+    <remote name="mine_gl" fetch="https://gitlab.com/RMX3366-Development" />
+    <!-- 上游 -->
+    <remote name="los_gh" fetch="https://mirrors.tuna.tsinghua.edu.cn/git/lineageOS/LineageOS" />
+    <remote name="camera_gl" fetch="https://gitlab.com/ermyltsor" />
+
+    <!-- 机型树：Android 17 移植分支 -->
+    <project path="device/realme/rivena"
+             name="android_device_realme_rivena"
+             revision="lineage-24.0"
+             remote="mine_gh" />
+
+    <!-- 公共设备树：7 个 Android 17 改动都在这里 -->
+    <project path="device/oppo/sm8250-common"
+             name="android_device_oppo_sm8250-common"
+             revision="lineage-24.0"
+             remote="mine_gh" />
+
+    <!--
+      内核：Linux 4.19.325，已建 lineage-24.0 分支。
+      分支内容和 lineage-23.2 完全一致（同一个 commit 3aa8183）—— 上游一加同平台的内核
+      lineage-23.2 与 lineage-24.0 的 tree sha 都是 98a7970，即这一层本来就不需要改，
+      建分支只是为了版本对齐、以后好往上叠补丁。
+      注意仓库名是 android_kernel_realme_sm8250（不是 oppo），fork 时沿用了源仓库名。
+    -->
+    <project path="kernel/oppo/sm8250"
+             name="android_kernel_realme_sm8250"
+             revision="lineage-24.0"
+             remote="mine_gh" />
+
+    <!--
+      hardware/oplus：用「上游 24.0 + rivena 16 个定制提交」的合并分支。
+      已推到 https://github.com/15367482130/android_hardware_oplus 的 lineage-24.0。
+      说明：为了让 GitHub 接受推送，历史里剔除了 .github/workflows（CI 配置，编译无关）。
+      如果这条分支编不过，退回纯上游 24.0 定位问题：
+        <project path="hardware/oplus" name="android_hardware_oplus"
+                 revision="lineage-24.0"
+                 remote="los_gh" />
+    -->
+    <project path="hardware/oplus"
+             name="android_hardware_oplus"
+             revision="lineage-24.0"
+             remote="mine_gh" />
+
+    <!-- Dolby 音效：与 Android 版本无关，分支名就叫 16 -->
+    <project path="hardware/dolby"
+             name="android_hardware_dolby"
+             revision="16"
+             remote="rmx_gh" />
+
+    <!--
+      vendor blobs（设备）：官方还没建 24.0 分支。
+      blob 内容本身不需要换版本，先直接复用 23.2；如果 WFD 起不来再看 fixup。
+    -->
+    <project path="vendor/realme/rivena"
+             name="proprietary_vendor_realme_rivena"
+             revision="lineage-23.2"
+             remote="mine_gl" />
+
+    <!-- vendor blobs（平台）：维护者 2026-10-22 已经建了 24.0 分支，直接用 -->
+    <project path="vendor/oppo/sm8250-common"
+             name="proprietary_vendor_oppo_sm8250-common"
+             revision="lineage-24.0"
+             remote="mine_gl" />
+
+    <!-- OPLUS 相机：只有 23.1，先试。崩了再单独处理（见 WHAT-ELSE.md） -->
+    <project path="vendor/oplus/camera"
+             name="proprietary_vendor_oplus_camera"
+             revision="lineage-23.1"
+             remote="camera_gl" />
+</manifest>
