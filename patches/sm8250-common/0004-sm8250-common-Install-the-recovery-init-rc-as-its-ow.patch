@@ -1,0 +1,51 @@
+From f8a1b4337baeabd6cfc08cfbce8288c901d98587 Mon Sep 17 00:00:00 2001
+From: rivena port <port@localhost>
+Date: Mon, 26 Oct 2026 08:23:30 +0800
+Subject: [PATCH 4/8] sm8250-common: Install the recovery init rc as its own
+ module
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+recovery_available 的新语义不再把模块装进 recovery 镜像，
+Android 17 要单独声明一个 recovery: true 的 prebuilt_etc。
+---
+ common.mk       | 2 +-
+ init/Android.bp | 8 +++++++-
+ 2 files changed, 8 insertions(+), 2 deletions(-)
+
+diff --git a/common.mk b/common.mk
+index f5c1da8..9312298 100644
+--- a/common.mk
++++ b/common.mk
+@@ -179,7 +179,7 @@ PRODUCT_PACKAGES += \
+ PRODUCT_PACKAGES += \
+     init.class_main.sh \
+     init.oplus.hw.rc \
+-    init.oplus.hw.rc.recovery \
++    init.oplus.hw.recovery.rc \
+     init.oplus.rc \
+     init.qcom.early_boot.sh \
+     init.qcom.post_boot.sh \
+diff --git a/init/Android.bp b/init/Android.bp
+index c0854bb..384dae0 100644
+--- a/init/Android.bp
++++ b/init/Android.bp
+@@ -22,7 +22,13 @@ prebuilt_etc {
+     src: "init.oplus.hw.rc",
+     sub_dir: "init",
+     device_specific: true,
+-    recovery_available: true,
++}
++
++prebuilt_etc {
++    name: "init.oplus.hw.recovery.rc",
++    src: "init.oplus.hw.rc",
++    sub_dir: "init",
++    recovery: true,
+ }
+ 
+ prebuilt_etc {
+-- 
+2.43.0
+
