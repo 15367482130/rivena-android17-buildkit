@@ -1,0 +1,32 @@
+From b262c96e96528cef931cbd460544bab223339312 Mon Sep 17 00:00:00 2001
+From: rivena port <port@localhost>
+Date: Mon, 26 Oct 2026 08:23:30 +0800
+Subject: [PATCH 6/8] sm8250-common: Update the Bluetooth audio policy include
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Android 17 把助听器专用策略合并成了通用 Bluetooth Audio HAL 配置，
+旧的 hearing_aid 文件已不存在，继续引用会导致 audio policy 解析失败。
+---
+ audio/audio_policy_configuration.xml | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/audio/audio_policy_configuration.xml b/audio/audio_policy_configuration.xml
+index d42fffa..05535e1 100644
+--- a/audio/audio_policy_configuration.xml
++++ b/audio/audio_policy_configuration.xml
+@@ -442,8 +442,8 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+         <!-- Remote Submix Audio HAL -->
+         <xi:include href="/vendor/etc/r_submix_audio_policy_configuration.xml"/>
+ 
+-        <!-- Bluetooth Audio HAL for hearing aid -->
+-        <xi:include href="/vendor/etc/bluetooth_hearing_aid_audio_policy_configuration.xml"/>
++        <!-- Bluetooth Audio HAL -->
++        <xi:include href="/vendor/etc/bluetooth_audio_policy_configuration.xml"/>
+ 
+     </modules>
+     <!-- End of Modules section -->
+-- 
+2.43.0
+
