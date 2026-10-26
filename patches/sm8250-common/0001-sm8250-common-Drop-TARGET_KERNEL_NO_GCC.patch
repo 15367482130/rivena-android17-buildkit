@@ -1,0 +1,30 @@
+From c835184517023d2920c2d19cc5ca9f9d7ce04ba1 Mon Sep 17 00:00:00 2001
+From: rivena port <port@localhost>
+Date: Mon, 26 Oct 2026 08:23:30 +0800
+Subject: [PATCH 1/8] sm8250-common: Drop TARGET_KERNEL_NO_GCC
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Android 17 的内核编译已经是纯 clang 流程，这个开关在新 build 系统里
+不再被读取。参照 LineageOS/android_device_oneplus_sm8250-common
+lineage-24.0 的同一改动。
+---
+ BoardConfigCommon.mk | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/BoardConfigCommon.mk b/BoardConfigCommon.mk
+index 036d850..b1fe1cc 100644
+--- a/BoardConfigCommon.mk
++++ b/BoardConfigCommon.mk
+@@ -92,7 +92,6 @@ BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOT_HEADER_VERSION)
+ BOARD_RAMDISK_USE_LZ4 := true
+ TARGET_KERNEL_SOURCE := kernel/oppo/sm8250
+ TARGET_KERNEL_CONFIG := vendor/kona-perf_defconfig vendor/oplus.config
+-TARGET_KERNEL_NO_GCC := true
+ 
+ # Platform
+ BOARD_USES_QCOM_HARDWARE := true
+-- 
+2.43.0
+
